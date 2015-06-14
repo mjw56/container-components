@@ -1,13 +1,15 @@
 import { MOVIES_FETCHED } from '../constants/ActionTypes';
 
-const initialState = []
+export default function movies(state = [], action) {
 
-export default function movies(state = initialState, action) {
+  function update(data) {
+    return [data, ...state];
+  }
 
   switch (action.type) {
 
     case MOVIES_FETCHED:
-      return [action.data, ...state]
+      return update(action.data);
 
     default:
       return state;
