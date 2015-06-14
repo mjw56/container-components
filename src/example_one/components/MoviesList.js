@@ -17,8 +17,8 @@ export default class MoviesList {
 
     return (
       <div>
-        {movies.map((movie) =>
-          <h1>{movie.Title}</h1>
+        {movies.map((movie, i) =>
+          <h1 key={i}>{movie.Title}</h1>
         )}
       </div>
     );
