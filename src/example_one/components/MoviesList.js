@@ -7,11 +7,9 @@ export default class MoviesList {
   };
 
   componentDidMount() {
-
     const { fetchMovies } = this.props;
 
     fetchMovies();
-
   }
 
   render() {
