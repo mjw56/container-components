@@ -1,49 +1,34 @@
-var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
 
-function isDirectory(dir) {
-  return fs.lstatSync(dir).isDirectory();
-}
-
 module.exports = {
-
-  devtool: 'inline-source-map',
-
-  entry: fs.readdirSync(__dirname).reduce(function (entries, dir) {
-    var isDraft = dir.charAt(0) === '_';
-
-    if (!isDraft && isDirectory(path.join(__dirname, dir)))
-      entries[dir] = path.join(__dirname, dir, 'index.js');
-
-    return entries;
-  }, {}),
-
+  devtool: 'eval',
+  entry: [
+    'webpack-dev-server/client?http://localhost:3000',
+    'webpack/hot/only-dev-server',
+    './example_one/index'
+  ],
   output: {
-    path: 'examples/__build__',
-    filename: '[name].js',
-    chunkFilename: '[id].chunk.js',
-    publicPath: '/__build__/'
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/static/'
   },
-
-  module: {
-    loaders: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel' }
-    ]
-  },
-
-  resolve: {
-    alias: {
-      'react-router$': process.cwd() + '/modules',
-      'react-router/lib': process.cwd() + '/modules'
-    }
-  },
-
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('shared.js'),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-    })
-  ]
-
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ],
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
+  module: {
+    loaders: [{
+      test: /\.jsx?$/,
+      loaders: ['react-hot', 'babel'],
+      include: [
+        __dirname,
+        path.resolve(__dirname, '../src')
+      ],
+      exclude: /node_modules/
+    }]
+  }
 };
