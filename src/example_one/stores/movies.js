@@ -3,7 +3,7 @@ import { MOVIES_FETCHED } from '../constants/ActionTypes';
 export default function movies(state = [], action) {
 
   function update(data) {
-    return [data, ...state];
+    return [...data.movies, ...state];
   }
 
   switch (action.type) {
