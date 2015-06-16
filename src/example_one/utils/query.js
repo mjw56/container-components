@@ -15,8 +15,5 @@ var API = {
 };
 
 export function magnetURI(hash, title) {
-  var template = 'magnet:?xt=urn:btih:{HASH}&dn={TITLE}&tr=' + trackers.join('&tr=');
-  return template
-    .replace('{HASH}', hash)
-    .replace('{TITLE}', encodeURIComponent(title));
+  return `magnet:?xt=urn:btih:${hash}&dn=${encodeURIComponent(title)}&tr=${trackers.join('&tr=')}`;
 }
