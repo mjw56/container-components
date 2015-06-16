@@ -1,4 +1,5 @@
 import { MOVIES_FETCHED } from '../constants/ActionTypes';
+import { magnetURI } from '../utils/query';
 
 export function moviesFetched(data) {
   return {
@@ -9,10 +10,15 @@ export function moviesFetched(data) {
 
 export function fetchMovies() {
   return dispatch => {
-    fetch('http://www.omdbapi.com/?t=the+godfather&y=&plot=short&r=json')
+    fetch('https://yts.to/api/v2/list_movies.json')
       .then(r => r.json())
       .then((r) => {
-        dispatch(moviesFetched(r))
+
+        r.data.movies.map((movie) => {
+          movie.magnet = magnetURI(movie.torrents[0].hash, movie.title_long)
+        });
+
+        dispatch(moviesFetched(r.data))
       });
   };
 
