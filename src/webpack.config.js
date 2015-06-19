@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   devtool: 'eval',
@@ -18,13 +19,17 @@ module.exports = {
     new webpack.NoErrorsPlugin()
   ],
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
+    packageAlias: "browser"
   },
   module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      loaders: ['react-hot', 'babel'],
-      exclude: /node_modules/
-    }]
+    loaders: [
+      { test: /\.jsx?$/, loaders: ['react-hot', 'babel'], exclude: /node_modules/ },
+      { test: /\.json$/, loader: 'json' },
+      { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader') },
+    ]
+  },
+  node: {
+    fs: "empty"
   }
 };
