@@ -2,11 +2,17 @@ var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.config');
 var express = require('express');
+var exec = require('child_process').exec;
 
 // TODO: Use socket.io
 
 const api = express()
-  .get('/torrent-stream', function(req, res) {
+  .get('/torrent-stream/:magnet?', function(req, res) {
+
+    var cmd = exec('peerflix "' + req.query.magnet + '" --vlc', function (error, stdout, stderr) {
+        console.log('kk', stdout);
+    });
+
     res.send({ data: 'torrent data' })
   });
 
