@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { styles } from '../styles';
 
 export default class MoviesList {
   static propTypes = {
@@ -12,6 +13,10 @@ export default class MoviesList {
     fetchMovies();
   }
 
+  componentWillReceiveProps(props) {
+
+  }
+
   render() {
     const { movies } = this.props;
 
@@ -19,7 +24,7 @@ export default class MoviesList {
       <div>
         {movies.map((movie, i) =>
           <div>
-            <h1 key={i}>{movie.title}</h1>
+            <h1 key={i} style={styles.title}>{movie.title}</h1>
             <img src={movie.medium_cover_image} />
           </div>
         )}
