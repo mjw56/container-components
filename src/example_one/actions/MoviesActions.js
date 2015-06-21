@@ -1,5 +1,5 @@
 import { MOVIES_FETCHED } from '../constants/ActionTypes';
-import { magnetURI } from '../utils/query';
+import { magnetURI } from '../utils/api';
 
 export function moviesFetched(data) {
   return {

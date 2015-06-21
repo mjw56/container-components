@@ -17,3 +17,7 @@ var API = {
 export function magnetURI(hash, title) {
   return `magnet:?xt=urn:btih:${hash}&dn=${encodeURIComponent(title)}&tr=${trackers.join('&tr=')}`;
 }
+
+export function watchTorrent(magnet) {
+  return fetch('http://localhost:3001/api/torrent-stream?magnet='+magnet);
+}
